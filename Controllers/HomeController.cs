@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using MvcMovie.Models;
+using System.Linq;
 
 namespace MvcMovie.Controllers
 {
@@ -9,7 +11,25 @@ namespace MvcMovie.Controllers
         {
             int hour = DateTime.Now.Hour;
             ViewBag.Greeting = hour < 12 ? "Good Morning" : "Good Afternoon";
-            return View ("MyView");
+            return View("MyView");
+        }
+
+        [HttpGet]
+        public ViewResult RsvpForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ViewResult RsvpForm(GuestResponse guestResponse)
+        {
+            Repository.AddResponse(guestResponse);
+            return View("Thanks", guestResponse);
+        }
+
+        public ViewResult ListResponses()
+        {
+            return View(Repository.Responses.Where(r => r.WillAttend == true));
         }
     }
 }
