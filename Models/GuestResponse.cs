@@ -1,10 +1,20 @@
-namespace MvcMovie.Models
-{
-    public class GuestResponse
+using System.ComponentModel.DataAnnotations;
+
+    namespace MvcMovie.Models
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public bool? WillAttend { get; set; }
+        public class GuestResponse
+        {
+            [Required(ErrorMessage = "Please enter your name")]
+            public string Name { get; set; }
+            
+            [Required(ErrorMessage = "Please enter your email address")]
+            [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Please enter a valid email address")]
+            public string Email { get; set; }
+
+            [Required(ErrorMessage = "Please enter your email phone number")]
+            public string Phone { get; set; }
+
+            [Required(ErrorMessage = "Please specify whether you'll attend")]
+            public bool? WillAttend { get; set; }
+        }
     }
-}
